@@ -1,0 +1,72 @@
+<?php
+SESSION_START();
+
+include "../database.php";
+
+$db = new Database();
+
+$nik = (isset($_SESSION['nik'])) ? $_SESSION['nik'] : "";
+$token = (isset($_SESSION['token'])) ? $_SESSION['token'] : "";
+
+if($token & $nik) {
+    $result = $db->execute("SELECT * FROM user_tbl WHERE nik = '" . $nik . "'AND token = '" . $token . "' AND status = 1");
+
+    if (!$result) {
+        // Redirect to login
+        header("Location: ../index.php");
+    }
+} else{
+    header("Location: ../index.php");
+}
+
+$notification = (isset($_SESSION['notification'])) ? $_SESSION['notification'] : "";
+
+if($notification){
+    echo $notification;
+    unset($_SESSION['notification']);
+}
+?>
+
+SUBMIT SCORE
+<table border="1">
+    <tr>
+        <td><a href="index.php">HOME</a></td>
+        <td><a href="statistik.php">STATISTIK</a></td>
+        <td><a href="leaderboard.php">LEADERBOARD</a></td>
+        <td><a href="submit_score.php">SUBMIT SCORE</a></td>
+        <td><a href="logout.php">LOGOUT</a> </td>
+    </tr>
+</table>
+
+<form action="leaderboard.php" method="get">
+    Pilih Game
+    <select name="game_id">
+        <?php
+        $gamedata = $db->get("SELECT game_id, nama FROM game_tbl WHERE status = 1");
+
+        while($row = mysqli_fetch_assoc($gamedata)){
+            ?>
+            <option value="<?php echo $row['game_id']?>" ><?php echo $row['nama']?></option>
+            <?php
+        }
+        ?>
+    </select>
+    <input type="submit" value="Pilih game">
+</form>
+
+<form action="leaderboard.php" method="get">
+    <select name="level_id">
+        <?php
+        // Show levels in options
+        $leveldata = $db->get("SELECT level_id, level FROM game_level_tbl
+WHERE game_level_tbl.game_id = ".$_GET['game_id']);
+
+        while($row = mysqli_fetch_assoc($leveldata)){
+            ?>
+            <option value="<?php echo $row['level_id']?>" ><?php echo $row['level']?></option>
+            <?php
+        }
+        ?>
+    </select>
+    <input type="submit" value="Tampilkan leaderboard">
+</form>

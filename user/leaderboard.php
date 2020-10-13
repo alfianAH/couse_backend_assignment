@@ -46,6 +46,7 @@ PAGE LEADERBOARD
         <td><a href="index.php">HOME</a></td>
         <td><a href="statistik.php">STATISTIK</a></td>
         <td><a href="leaderboard.php">LEADERBOARD</a></td>
+        <td><a href="submit_score.php">SUBMIT SCORE</a></td>
         <td><a href="logout.php">LOGOUT</a> </td>
     </tr>
 </table>

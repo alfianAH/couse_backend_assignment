@@ -43,13 +43,14 @@ PAGE STATISTIK
         <td><a href="index.php">HOME</a></td>
         <td><a href="statistik.php">STATISTIK</a></td>
         <td><a href="leaderboard.php">LEADERBOARD</a></td>
+        <td><a href="submit_score.php">SUBMIT SCORE</a></td>
         <td><a href="logout.php">LOGOUT</a> </td>
     </tr>
 </table>
 
 <table border="1">
     <tr>
-        <td align="center" colspan="4">USER STATISTIK SKOR GAME</td>
+        <td align="center" colspan="5">USER STATISTIK SKOR GAME</td>
     </tr>
 
     <tr>
