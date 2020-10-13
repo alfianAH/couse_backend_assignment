@@ -48,16 +48,12 @@ PAGE HOME
         <td><a href="statistik.php">STATISTIK</a></td>
         <td><a href="leaderboard.php">LEADERBOARD</a></td>
         <td><a href="submit_score.php">SUBMIT SCORE</a></td>
+        <td><a href="create_game.php">ADD GAME</a></td>
         <td><a href="logout.php">LOGOUT</a> </td>
     </tr>
 
     <tr>
         <td align="center" colspan=5">PROFILE</td>
-    </tr>
-
-    <tr>
-        <td>NIK</td>
-        <td colspan="4"><?php echo $userdata['nik'];?></td>
     </tr>
 
     <tr>
