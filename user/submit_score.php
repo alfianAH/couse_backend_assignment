@@ -38,7 +38,7 @@ SUBMIT SCORE
     </tr>
 </table>
 
-<form action="leaderboard.php" method="get">
+<form action="submit_score.php" method="get">
     Pilih Game
     <select name="game_id">
         <?php
@@ -54,7 +54,7 @@ SUBMIT SCORE
     <input type="submit" value="Pilih game">
 </form>
 
-<form action="leaderboard.php" method="get">
+<form action="submit_score.php" method="get">
     <select name="level_id">
         <?php
         // Show levels in options
@@ -68,5 +68,23 @@ WHERE game_level_tbl.game_id = ".$_GET['game_id']);
         }
         ?>
     </select>
-    <input type="submit" value="Tampilkan leaderboard">
+
+    <label>Submit score:
+        <input type="text" name="score" required>
+    </label>
+
+    <input type="submit" value="Submit Score">
 </form>
+
+<?php
+if(isset($_GET['level_id']) && isset($_GET['score'])){
+    $submit_score = $db->execute(
+        "INSERT INTO user_game_data_tbl(nik, level_id, score, status) 
+VALUES('".$nik."', 
+'".$_GET['level_id']."', 
+'".$_GET['score']."', 1)");
+    if($submit_score) {
+        echo "Submit berhasil. Lihat di <a href='statistik.php'>statistik</a>";
+    }
+}
+?>
