@@ -8,9 +8,6 @@ $db = new Database();
 $nik = (isset($_SESSION['nik'])) ? $_SESSION['nik'] : "";
 $token = (isset($_SESSION['token'])) ? $_SESSION['token'] : "";
 
-$game_id = $_POST['game_id'];
-$game_name = $_POST['game_name'];
-
 if($token & $nik) {
     $result = $db->execute("SELECT * FROM user_tbl WHERE nik = '" . $nik . "'AND token = '" . $token . "' AND status = 1");
 
@@ -18,6 +15,9 @@ if($token & $nik) {
         // Redirect to login
         header("Location: ../../index.php");
     }
+
+    $game_id = $_POST['game_id'];
+    $game_name = $_POST['game_name'];
 } else{
     header("Location: ../../index.php");
 }
@@ -46,13 +46,17 @@ UPDATE GAME
 // If delete, ...
 if(isset($_POST['delete']) && isset($game_id)){
     $delete_data = $db->execute("DELETE FROM game_tbl WHERE game_id = $game_id");
-    $_SESSION['notification'] = "Delete berhasil<br>";
-    header("Location: list_game.php");
+    IF($delete_data) {
+        $_SESSION['notification'] = "Delete berhasil<br>";
+        header("Location: list_game.php");
+    } else{
+        $_SESSION['notification'] = "Delete gagal<br>";
+    }
 }
 
 if(isset($_POST['edit'])){
     ?>
-    <form action="update_game.php" method="post">
+    <form action="update_game_process.php" method="post">
         <table>
             <tr>
                 <td>Nama game</td>
@@ -61,15 +65,13 @@ if(isset($_POST['edit'])){
             </tr>
 
             <tr>
-                <td><input type="submit" value="Update"></td>
+                <td>
+                    <input type="hidden" name="game_id" value="<?=$game_id?>">
+                    <input type="submit" value="Update">
+                </td>
             </tr>
         </table>
     </form>
     <?php
-}
-
-// If update,...
-if(isset($_POST['name'])){
-
 }
 ?>
