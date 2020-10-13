@@ -8,6 +8,9 @@ $db = new Database();
 $nik = (isset($_SESSION['nik'])) ? $_SESSION['nik'] : "";
 $token = (isset($_SESSION['token'])) ? $_SESSION['token'] : "";
 
+$game_id = $_POST['game_id'];
+$game_name = $_POST['game_name'];
+
 if($token & $nik) {
     $result = $db->execute("SELECT * FROM user_tbl WHERE nik = '" . $nik . "'AND token = '" . $token . "' AND status = 1");
 
@@ -15,10 +18,6 @@ if($token & $nik) {
         // Redirect to login
         header("Location: ../../index.php");
     }
-
-    $list_game = $db->get("SELECT game_tbl.nama as name,
-    game_tbl.game_id as game_id
-    FROM game_tbl");
 } else{
     header("Location: ../../index.php");
 }
@@ -31,7 +30,7 @@ if($notification){
 }
 ?>
 
-LIST GAME
+UPDATE GAME
 <table border="1">
     <tr>
         <td><a href="../index.php">HOME</a></td>
@@ -43,28 +42,34 @@ LIST GAME
     </tr>
 </table>
 
-<table border="1">
-    <tr>
-        <td>Nama game</td>
-        <td>Action</td>
-    </tr>
-    <?php
-    while($row = mysqli_fetch_assoc($list_game)){
-        ?>
-        <tr>
-            <td><?php echo $row['name']?></td>
-            <td>
-                <form action="update_game.php" method="post">
-                    <input type="hidden" name="game_id" value="<?=$row['game_id']?>">
-                    <input type="hidden" name="game_name" value="<?=$row['name']?>">
-                    <input type="submit" value="Delete" name="delete">
-                    <input type="submit" value="Edit" name="edit">
-                </form>
-            </td>
-        </tr>
-        <?php
-    }
-    ?>
-</table>
+<?php
+// If delete, ...
+if(isset($_POST['delete']) && isset($game_id)){
+    $delete_data = $db->execute("DELETE FROM game_tbl WHERE game_id = $game_id");
+    $_SESSION['notification'] = "Delete berhasil<br>";
+    header("Location: list_game.php");
+}
 
-<button><a href="create_game.php">ADD GAME?</a></button>
+if(isset($_POST['edit'])){
+    ?>
+    <form action="update_game.php" method="post">
+        <table>
+            <tr>
+                <td>Nama game</td>
+                <td>:</td>
+                <td><input type="text" value="<?php echo $game_name?>" name="name"></td>
+            </tr>
+
+            <tr>
+                <td><input type="submit" value="Update"></td>
+            </tr>
+        </table>
+    </form>
+    <?php
+}
+
+// If update,...
+if(isset($_POST['name'])){
+
+}
+?>
