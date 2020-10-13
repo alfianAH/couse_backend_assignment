@@ -63,16 +63,18 @@ PAGE STATISTIK
     </tr>
 
     <?php
-    while ($row = mysqli_fetch_assoc($statisticdata)){
-        ?>
-        <tr>
-            <td><?php echo $row['game']?></td>
-            <td><?php echo $row['level']?></td>
-            <td><?php echo $row['min']?></td>
-            <td><?php echo $row['max']?></td>
-            <td><?php echo $row['avg']?></td>
-        </tr>
-    <?php
+    if($statisticdata){
+        while ($row = mysqli_fetch_assoc($statisticdata)){
+            ?>
+            <tr>
+                <td><?php echo $row['game']?></td>
+                <td><?php echo $row['level']?></td>
+                <td><?php echo $row['min']?></td>
+                <td><?php echo $row['max']?></td>
+                <td><?php echo $row['avg']?></td>
+            </tr>
+        <?php
+        }
     }
     ?>
 </table>
