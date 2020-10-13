@@ -63,12 +63,32 @@ PAGE LEADERBOARD
         }
         ?>
     </select>
+    <input type="submit" value="Pilih game">
+</form>
+
+<form action="leaderboard.php" method="get">
+    <select name="level_id">
+        <?php
+        $leveldata = $db->get("SELECT level_id, level FROM game_level_tbl
+WHERE game_level_tbl.game_id = ".$_GET['game_id']);
+
+        while($row = mysqli_fetch_assoc($leveldata)){
+            ?>
+            <option value="<?php echo $row['level_id']?>" ><?php echo $row['level']?></option>
+            <?php
+        }
+        ?>
+    </select>
     <input type="submit" value="Tampilkan leaderboard">
 </form>
 
 <?php
-if(isset($_GET['game_id'])){
-    echo "LEADERBOARD GAME ID: ". $_GET['game_id'];
+if(isset($_GET['level_id'])){
+    $game_level = $db->get("SELECT game_id, level 
+FROM game_level_tbl 
+WHERE game_level_tbl.level_id = ".$_GET['level_id']);
+    $game_level = mysqli_fetch_assoc($game_level);
+    echo "LEADERBOARD GAME ID: ". $game_level['game_id'] . " Level: ".$game_level['level'];
     ?>
     <table border="1">
         <tr>
@@ -83,20 +103,23 @@ if(isset($_GET['game_id'])){
         MAX(user_game_data_tbl.score) as score
         FROM user_tbl, user_game_data_tbl
         WHERE user_tbl.nik = user_game_data_tbl.nik AND 
-        user_game_data_tbl.game_id = ".$_GET['game_id'].
+        user_game_data_tbl.level_id = ".$_GET['level_id'].
         " GROUP BY user_tbl.nik ORDER BY score DESC");
 
         $number = 0;
-
-        while($row = mysqli_fetch_assoc($leaderboard)){
-            $number++;
-            ?>
-            <tr>
-                <td><?php echo $number ?></td>
-                <td><?php echo $row['nama_depan']. " ". $row['nama_belakang'] ?></td>
-                <td><?php echo $row['score'] ?></td>
-            </tr>
-            <?php
+        if($leaderboard == null){
+            echo "<br> null";
+        } else{
+            while($row = mysqli_fetch_assoc($leaderboard)){
+                $number++;
+                ?>
+                <tr>
+                    <td><?php echo $number ?></td>
+                    <td><?php echo $row['nama_depan']. " ". $row['nama_belakang'] ?></td>
+                    <td><?php echo $row['score'] ?></td>
+                </tr>
+                <?php
+            }
         }
         ?>
     </table>

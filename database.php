@@ -26,11 +26,11 @@ class Database{
         $result = $connection->query($query);
 
         if($result->num_rows > 0){
-            echo "Berhasil";
+//            echo "Berhasil";
             $connection->close();
             return $result;
         }
-        echo "tidak Berhasil";
+//        echo "tidak Berhasil";
         $connection->close();
         return null;
     }
