@@ -1,6 +1,7 @@
 <?php
 SESSION_START();
-include "../database.php";
+
+include "../../database.php";
 
 $db = new Database();
 
@@ -12,10 +13,10 @@ if($token & $nik) {
 
     if (!$result) {
         // Redirect to login
-        header("Location: ../index.php");
+        header("Location: ../../index.php");
     }
 } else{
-    header("Location: index.php");
+    header("Location: ../../index.php");
 }
 
 $notification = (isset($_SESSION['notification'])) ? $_SESSION['notification'] : "";
@@ -26,15 +27,14 @@ if($notification){
 }
 ?>
 
-ADD GAME
-
+LIST GAME
 <table border="1">
     <tr>
-        <td><a href="index.php">HOME</a></td>
-        <td><a href="statistik.php">STATISTIK</a></td>
-        <td><a href="leaderboard.php">LEADERBOARD</a></td>
-        <td><a href="submit_score.php">SUBMIT SCORE</a></td>
-        <td><a href="create_game.php">ADD GAME</a></td>
-        <td><a href="logout.php">LOGOUT</a> </td>
+        <td><a href="../index.php">HOME</a></td>
+        <td><a href="../statistik.php">STATISTIK</a></td>
+        <td><a href="../leaderboard.php">LEADERBOARD</a></td>
+        <td><a href="../submit_score.php">SUBMIT SCORE</a></td>
+        <td><a href="list_game.php">LIST GAME</a></td>
+        <td><a href="../logout.php">LOGOUT</a> </td>
     </tr>
 </table>

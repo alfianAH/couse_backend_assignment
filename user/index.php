@@ -48,7 +48,7 @@ PAGE HOME
         <td><a href="statistik.php">STATISTIK</a></td>
         <td><a href="leaderboard.php">LEADERBOARD</a></td>
         <td><a href="submit_score.php">SUBMIT SCORE</a></td>
-        <td><a href="create_game.php">ADD GAME</a></td>
+        <td><a href="game/list_game.php">LIST GAME</a></td>
         <td><a href="logout.php">LOGOUT</a> </td>
     </tr>
 
