@@ -69,6 +69,7 @@ PAGE LEADERBOARD
 <form action="leaderboard.php" method="get">
     <select name="level_id">
         <?php
+        // Show levels in options
         $leveldata = $db->get("SELECT level_id, level FROM game_level_tbl
 WHERE game_level_tbl.game_id = ".$_GET['game_id']);
 
@@ -84,10 +85,12 @@ WHERE game_level_tbl.game_id = ".$_GET['game_id']);
 
 <?php
 if(isset($_GET['level_id'])){
+    // Get game_id and level name
     $game_level = $db->get("SELECT game_id, level 
 FROM game_level_tbl 
 WHERE game_level_tbl.level_id = ".$_GET['level_id']);
     $game_level = mysqli_fetch_assoc($game_level);
+    // Show title
     echo "LEADERBOARD GAME ID: ". $game_level['game_id'] . " Level: ".$game_level['level'];
     ?>
     <table border="1">
@@ -98,6 +101,7 @@ WHERE game_level_tbl.level_id = ".$_GET['level_id']);
         </tr>
 
         <?php
+        // Get leaderboard
         $leaderboard = $db->get("SELECT user_tbl.nama_depan as nama_depan,
         user_tbl.nama_belakang as nama_belakang,
         MAX(user_game_data_tbl.score) as score
@@ -107,9 +111,11 @@ WHERE game_level_tbl.level_id = ".$_GET['level_id']);
         " GROUP BY user_tbl.nik ORDER BY score DESC");
 
         $number = 0;
+        // if leaderboard is null, ...
         if($leaderboard == null){
             echo "<br> null";
-        } else{
+        } else{ // else, ...
+            // Show leaderboards
             while($row = mysqli_fetch_assoc($leaderboard)){
                 $number++;
                 ?>

@@ -15,12 +15,15 @@ if($token & $nik) {
         header("Location: ../index.php");
     }
     $statisticdata = $db->get("SELECT game_tbl.nama as game, 
+    game_level_tbl.level as level,
     MIN(user_game_data_tbl.score) as min, 
     MAX(user_game_data_tbl.score) as max,
     AVG(user_game_data_tbl.score) as avg
-    FROM user_game_data_tbl, game_tbl 
-    WHERE user_game_data_tbl.game_id = game_tbl.game_id AND 
-    user_game_data_tbl.nik = '".$nik."' GROUP BY user_game_data_tbl.game_id");
+    FROM user_game_data_tbl, game_tbl, game_level_tbl 
+    WHERE user_game_data_tbl.level_id = game_level_tbl.level_id AND
+    game_level_tbl.game_id = game_tbl.game_id AND 
+    user_game_data_tbl.nik = '".$nik."' 
+    GROUP BY game_level_tbl.level_id");
 } else{
     header("Location: ../index.php");
 }
@@ -51,6 +54,7 @@ PAGE STATISTIK
 
     <tr>
         <td>GAME</td>
+        <td>LEVEL</td>
         <td>MIN</td>
         <td>MAX</td>
         <td>AVG</td>
@@ -61,6 +65,7 @@ PAGE STATISTIK
         ?>
         <tr>
             <td><?php echo $row['game']?></td>
+            <td><?php echo $row['level']?></td>
             <td><?php echo $row['min']?></td>
             <td><?php echo $row['max']?></td>
             <td><?php echo $row['avg']?></td>
