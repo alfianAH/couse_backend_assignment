@@ -15,6 +15,9 @@ if($token & $nik) {
         // Redirect to login
         header("Location: ../../index.php");
     }
+
+    $list_game = $db->get("SELECT game_tbl.nama as name
+    FROM game_tbl");
 } else{
     header("Location: ../../index.php");
 }
@@ -38,3 +41,28 @@ LIST GAME
         <td><a href="../logout.php">LOGOUT</a> </td>
     </tr>
 </table>
+
+<table border="1">
+    <tr>
+        <td>Nama game</td>
+        <td>Action</td>
+    </tr>
+    <?php
+    while($row = mysqli_fetch_assoc($list_game)){
+        ?>
+        <tr>
+            <td><?php echo $row['name']?></td>
+            <td>
+                <form action="" method="post">
+                    <input type="hidden" name="game_id" value="<?=$row['game_id']?>">
+                    <input type="submit" value="Delete" name="delete">
+                    <input type="submit" value="Edit" name="edit">
+                </form>
+            </td>
+        </tr>
+        <?php
+    }
+    ?>
+</table>
+
+<button><a href="create_game.php">ADD GAME?</a></button>
